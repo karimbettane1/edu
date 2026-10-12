@@ -1,0 +1,17 @@
+import { BrowserRouter } from 'react-router-dom'
+import { AuthProvider } from './contexts/AuthContext'
+import { ThemeProvider } from './contexts/ThemeContext'
+import AppRoutes from './routes/AppRoutes'
+import './i18n'
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
+      </BrowserRouter>
+    </ThemeProvider>
+  )
+}
