@@ -132,6 +132,22 @@ Mot de passe commun : `password`
 - 216 ressources pédagogiques (cours, TP, examens, résumés…) avec fichiers téléchargeables
 - 3 quiz (22 questions), 8 projets étudiants, commentaires modérés, signalements
 
+## Importer vos propres PDF (usage local)
+
+La plateforme peut remplacer les fichiers de démonstration par **vos propres PDF** (support de cours que vous détenez, usage personnel) :
+
+1. Déposez vos fichiers dans `backend/storage/app/ofppt-import/` — le nom doit contenir le **type** (`cours`, `tp`, `exercice`, `examen`, `controle`, `resume`…) et le **nom du module** (ex. `Cours - Acquérir les bases de l'algorithmique.pdf`). Pour un module commun DD/ID, préfixez par `DD` ou `ID`.
+2. Simulez puis appliquez :
+
+```bash
+cd digital-academy/backend
+php artisan academy:import-pdfs --dry-run            # aperçu de l'association fichier → ressource
+php artisan academy:import-pdfs                      # applique (remplace les fichiers de démo)
+php artisan academy:import-pdfs --create             # crée aussi des ressources pour les PDF sans équivalent
+```
+
+La commande associe chaque PDF au bon module et type de ressource, met à jour le fichier téléchargeable, journalise chaque import dans l'audit et **ne supprime un fichier de démo que s'il est identifié comme tel**. Les fichiers importés restent locaux : `storage/` est exclu du git, ils ne sont jamais publiés. Pour revenir aux fichiers de démonstration : `php artisan migrate:fresh --seed`.
+
 ## Structure du projet
 
 ```
